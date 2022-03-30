@@ -1,0 +1,20 @@
+mat-card{
+    width: 18%;
+    margin-right: 5px;
+}
+mat-card ul li{
+    list-style: none;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+.spinner{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+ul li{
+    list-style: none;
+}
