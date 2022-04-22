@@ -2,7 +2,7 @@
     <mat-spinner diameter="40"></mat-spinner>
 </div>
 <div class="mb-2 d-flex flex-row-reverse">
-    <a href="https://prime-shopper-api.herokuapp.com/csv/Add_Products.csv" download class="btn btn-primary">Template CSV Download</a>
+    <a class="btn btn-primary" href="https://sellercliq.com/csv/Add_Products.xlsx" download>DOWNLOAD</a>
 </div>
 <!-- <div class="d-flex position-relative" #mainDiv>
     <ul *ngIf="datas" class="m-0 p-0">
@@ -54,7 +54,15 @@
         <ul class="p-0">
             <li *ngFor="let data of newData3; let i= index" class="d-flex justify-content-between py-1">
                 <span (click)="addData(data.id,data)">{{ data.data.name }}</span>
-                <span *ngIf="data.children.length" (click)="viewChild3(i,data.id)" class="btn p-0">></span>
+                <span *ngIf="data.children.length" (click)="viewChild4(i,data.id)" class="btn p-0">></span>
+            </li>
+        </ul>
+    </mat-card>
+    <mat-card *ngIf="viewList4">
+        <ul class="p-0">
+            <li *ngFor="let data of newData4; let i= index" class="d-flex justify-content-between py-1">
+                <span (click)="addData(data.id,data)">{{ data.data.name }}</span>
+                <!-- <span *ngIf="data.children.length" (click)="viewChild3(i,data.id)" class="btn p-0">></span> -->
             </li>
         </ul>
     </mat-card>

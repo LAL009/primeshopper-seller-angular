@@ -47,24 +47,48 @@
           <table class="table mb-0">
             <thead>
               <tr>
-                <th scope="col" class="text-nowrap">Image</th>
-                <th scope="col" class="text-nowrap">Sku</th>
                 <th scope="col" class="text-nowrap">Product Name</th>
-                <th scope="col" class="text-nowrap">Date Created</th>
-                <th scope="col" class="text-nowrap">Available</th>
-                <th scope="col" class="text-nowrap">Fee Preview</th>
-                <th scope="col" class="text-nowrap">Price</th>
-                <th scope="col" class="text-nowrap">Business Price</th>
-                <th scope="col" class="text-nowrap">Lowest Price</th>
-               
+                <th scope="col" class="text-nowrap">SKU</th>
+                <th scope="col" class="text-nowrap">Brand Name</th>
+                <th scope="col" class="text-nowrap">Product Status</th>
+                <th scope="col" class="text-nowrap">Country of Origin</th>
+                <th scope="col" class="text-nowrap">Created At</th>
+                <th scope="col" class="text-nowrap">External Product Id</th>
+                <th scope="col" class="text-nowrap">External Product Id Type</th>
+                <th scope="col" class="text-nowrap">Importer Details</th>
               </tr>
-  
             </thead>
             <tbody>
   
               <tr>
-              <!-- <tr *ngFor="let product of productsData">
+              <tr *ngFor="let product of manageInventorys">
                 <td>
+                  {{product.title}}
+                </td>
+                <td>
+                  {{product.sku}}
+                </td>
+                <td>
+                  {{product.brand_name}}
+                </td>
+                <td>
+                  {{product.productStatus}}
+                </td>
+                <td>
+                  {{product.country_of_origin}}
+                </td>
+                <td>
+                  {{product.createdAt}}
+                </td><td>
+                  {{product.external_product_id}}
+                </td>
+                <td>
+                  {{product.external_product_id_type}}
+                </td>
+                <td>
+                  {{product.importer_details}}
+                </td>
+                <!-- <td>
                   {{product.category}}
                 </td>
                 <td>
@@ -122,8 +146,8 @@
                     </div>
                   </div>
   
-                </td>
-              </tr> -->
+                </td> -->
+              </tr>
             </tbody>
           </table>
         </div>

@@ -42,10 +42,12 @@ export class AddProductsViaUploadComponent implements OnInit {
   newData1: any;
   newData2: any;
   newData3: any;
+  newData4:any
   viewList = false;
   viewList1 = false;
   viewList2 = false;
   viewList3 = false;
+  viewList4 = false;
   spinner = false;
   // parentsArray: any = [];
 
@@ -95,6 +97,17 @@ export class AddProductsViaUploadComponent implements OnInit {
       this.viewList3 = true;
     } else {
       this.viewList3 = false;
+    }
+
+    // this.parentsArray = this.getPath(this.datas[0], id);
+    // this.parentsArray.push(id);
+  }
+  viewChild4(index: any, id: any) {
+    this.newData4 = this.newData3[index].children;
+    if (this.newData4.length > 0) {
+      this.viewList4 = true;
+    } else {
+      this.viewList4 = false;
     }
 
     // this.parentsArray = this.getPath(this.datas[0], id);
@@ -195,17 +208,17 @@ export class AddProductsViaUploadComponent implements OnInit {
     console.log(this.uplodedFile);
   }
 
-  send_datas: any = '';
+  send_datas = new FormData();
   submitData() {
-    this.send_datas = new FormData();
+
     this.send_datas.append("parentId",this.parentId);
     this.send_datas.append("id",this.selectedId);
-    this.send_datas.append("csv",this.uplodedFile);
+    this.send_datas.append("cvs",this.uplodedFile);
 
-    this.http.upload_svg(this.send_datas, "/seller/products/csv").subscribe((result: any) => {
-      this.http.showAlert('success', 'Product Upload', "Product Upload Successfull");
-    }, (error) => {
-      this.http.showAlert('error', 'Error', error.error.message);
+    console.log(this.send_datas);
+
+    this.http.upload_svg(this.send_datas, "/seller/products/csv").subscribe(result => {
+      console.log(result);
     })
 
   }

@@ -8,7 +8,7 @@ import { DataService } from 'src/app/data.service';
   styleUrls: ['./manage-inventory.component.css']
 })
 export class ManageInventoryComponent implements OnInit {
-  manageInventorys :Array<ManageInventory> = []
+  manageInventorys :Array<any> = []
   constructor(
     private dataService : DataService
 ) { }
@@ -21,20 +21,8 @@ export class ManageInventoryComponent implements OnInit {
   loadManageInventory(){
     this.dataService.__post('/products',{})
     .subscribe(
-      (inventorys:Array<any>)=>{
-        inventorys.map( (inventory:any)=>{
-          this.manageInventorys.push({
-            _id:inventory._id,
-            productName : inventory.name,
-            available: inventory.available,
-            feePriview: inventory.priview,
-            image:inventory.image,
-            sku:inventory.sku,
-            price: inventory.price,
-            businessPrice:inventory.businessPrice,
-            lowestPrice: inventory.lowestPrice,
-          })
-        })
+      (inventorys:Array<any>)=>{        
+        this.manageInventorys = inventorys;
         
 
       },
