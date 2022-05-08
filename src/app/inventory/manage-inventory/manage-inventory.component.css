@@ -1,0 +1,16 @@
+.productImage{
+    width: 80px;
+    height: 80px;
+}
+
+.productName{
+    max-width: 200px;
+}
+
+.titleLink{
+    color: black;
+}
+
+.titleLink:hover{
+    color: #7367f0;
+}

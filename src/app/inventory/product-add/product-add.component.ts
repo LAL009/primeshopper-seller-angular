@@ -17,7 +17,7 @@ export class ProductAddComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log("Set Category API from https://prime-shopper-api.herokuapp.com/api/v1/categories")
+    console.log("Set Category API from https://api.datavidhya.com/api/v1/categories")
   }
 
   p_image = "";

@@ -1,48 +1,42 @@
-import { Injectable } from '@angular/core';
-import { map, catchError } from 'rxjs/operators';
-import { throwError, Subject, Observable } from 'rxjs';
-import { HttpClient, HttpEventType, HttpHeaders } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
+import { Injectable } from "@angular/core";
+import { map, catchError } from "rxjs/operators";
+import { throwError, Subject, Observable } from "rxjs";
+import { HttpClient, HttpEventType, HttpHeaders } from "@angular/common/http";
+import { ToastrService } from "ngx-toastr";
 import $ from "jquery";
-import { Title } from '@angular/platform-browser';
-import { Products } from './classes/products';
-
-
+import { Title } from "@angular/platform-browser";
+import { Products } from "./classes/products";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class DataService {
-
-  productData: Array<Products> = []
+  productData: Array<Products> = [];
 
   selectedSocialMedias = new Subject<any>();
-  _id: object = {}
+  _id: object = {};
   constructor(
     private _http: HttpClient,
     private titleService: Title,
-    private toastr: ToastrService,
-  ) { }
+    private toastr: ToastrService
+  ) {}
 
-  localUrl: string = 'http://192.168.1.3:8080/api/v1';
-  liveUrl: string = 'https://prime-shopper-api.herokuapp.com/api/v1';
-  // liveUrl: string = 'http://localhost:5000/api/v1';
-  addproduct_url = "https://prime-shopper-api.herokuapp.com/api/v1/seller/product/add";
-  // addproduct_url = "http://localhost:5000/api/v1/seller/product/add";
-  updateproduct_url = "https://prime-shopper-api.herokuapp.com/api/v1/seller/product/update";
-  // addproduct_url = "http://localhost:5000/api/v1/seller/product/add";
-  // liveUrl: string = 'http://192.168.1.4:9090/api/v1/front';
-  // apiUrl: string = (window.location.origin.match('localhost') !== null ? this.localUrl : this.liveUrl);
+  currentLiveUrl = "https://api.datavidhya.com"
+  // currentLiveUrl = "http://localhost:5000";
+
+  liveUrl: string = `${this.currentLiveUrl}/api/v1`;
+  addproduct_url = `${this.currentLiveUrl}/api/v1/seller/product/add`;
+  updateproduct_url = `${this.currentLiveUrl}/api/v1/seller/product/update`;
   apiUrl: string = this.liveUrl;
-  productListData_url = "https://prime-shopper-api.herokuapp.com/api/v1/seller/category";
+  productListData_url = `${this.currentLiveUrl}/api/v1/seller/category`;
+  orders_url = `${this.currentLiveUrl}/api/v1/seller/orders`;
+  updateOrder_url = `${this.currentLiveUrl}/api/v1/seller/order/update`;
+  couriers_url = `${this.currentLiveUrl}/api/v1/seller/couriers`;
 
+  sellerID: any;
+  userName = new Subject<any>();
 
-
-  sellerID: any
-  userName = new Subject<any>()
-
-
-  setTitle(title: string = 'Home', main: string = '| PrimeShopper') {
+  setTitle(title: string = "Home", main: string = "| PrimeShopper") {
     this.titleService.setTitle(`${title} ${main}`);
   }
 
@@ -55,24 +49,30 @@ export class DataService {
   }
 
   _handleError(error: any) {
-    let errorMessage = '';
+    let errorMessage = "";
     if (error.error instanceof ErrorEvent) {
       errorMessage = `Error: ${error.error.message}`;
     } else {
       errorMessage =
-        error.message || 'Oops! Something went wrong, Please try again.';
+        error.message || "Oops! Something went wrong, Please try again.";
     }
     return errorMessage;
   }
 
-  __post(url: string, data: any, loaderElement: any = false, progressBarLine: any = false) {
-
+  __post(
+    url: string,
+    data: any,
+    loaderElement: any = false,
+    progressBarLine: any = false
+  ) {
     var buttonName = "";
 
     if (loaderElement) {
       buttonName = $(loaderElement).text();
-      $(buttonName).attr('disabled', 'true');
-      $(loaderElement).html('<i class="fa fa-spin fa-spinner"></i> ' + buttonName);
+      $(buttonName).attr("disabled", "true");
+      $(loaderElement).html(
+        '<i class="fa fa-spin fa-spinner"></i> ' + buttonName
+      );
     }
 
     var options: any = { headers: this._getHeaders() };
@@ -86,12 +86,11 @@ export class DataService {
 
     return this._http.post(`${this.apiUrl}${url}`, data, options).pipe(
       map((response: any) => {
-
         // Remove Loader
 
         if (loaderElement) {
-          $(buttonName).removeAttr('disabled');
-          $(loaderElement).find('.fa').remove();
+          $(buttonName).removeAttr("disabled");
+          $(loaderElement).find(".fa").remove();
           $(loaderElement).html(buttonName);
         }
 
@@ -101,7 +100,7 @@ export class DataService {
         // this._toast.error(error)
 
         if (loaderElement) {
-          $(loaderElement).find('.fa').remove();
+          $(loaderElement).find(".fa").remove();
           $(loaderElement).html(buttonName);
         }
 
@@ -112,22 +111,26 @@ export class DataService {
 
   _getHeaders() {
     var token = this.getToken();
-    return new HttpHeaders({ 'X-Authentication-token': (token ? token : 'unAuth') })
+    return new HttpHeaders({
+      "X-Authentication-token": token ? token : "unAuth",
+    });
   }
 
   _getHeadersFile() {
     var token = this.getToken();
-    return new HttpHeaders({ 'X-Authentication-token': (token ? token : 'unAuth') })
+    return new HttpHeaders({
+      "X-Authentication-token": token ? token : "unAuth",
+    });
   }
 
   getToken() {
-    return localStorage.getItem('X-Authentication-token');
+    return localStorage.getItem("X-Authentication-token");
   }
 
   showAlert(type: string, title: string, message: string) {
-    if (type == 'success') {
+    if (type == "success") {
       this.toastr.success(message, title);
-    } else if (type == 'error') {
+    } else if (type == "error") {
       this.toastr.error(message, title);
     }
   }
@@ -153,9 +156,22 @@ export class DataService {
     return this._http.get(this.productListData_url, options);
   }
 
-  upload_svg(data:any,api:any){
+  upload_svg(data: any, api: any) {
     var options: any = { headers: this._getHeaders() };
-    return this._http.post(this.liveUrl + api,data, options);
+    return this._http.post(this.liveUrl + api, data, options);
+  }
+
+  get_orders() {
+    var options: any = { headers: this._getHeaders() };
+    return this._http.post(this.orders_url, '', options);
+  }
+  get_couriers() {
+    var options: any = { headers: this._getHeaders() };
+    return this._http.post(this.couriers_url, '', options);
+  }
+
+  update_order(data: any) {
+    var options: any = { headers: this._getHeaders() };
+    return this._http.post(this.updateOrder_url, data, options);
   }
 }
-

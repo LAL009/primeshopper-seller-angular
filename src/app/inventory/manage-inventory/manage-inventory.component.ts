@@ -32,4 +32,9 @@ export class ManageInventoryComponent implements OnInit {
     )
   }
 
+  redirectUrl(id: any, var1: any, var2: any){
+    let var1val = var1 ? var1 : null
+    let var2val = var2 ? var2 : null
+    return 'https://justcliq.co.in/product/'+ id + '/' + var1val + '/' + var2val
+  }
 }
